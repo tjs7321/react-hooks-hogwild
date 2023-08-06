@@ -1,8 +1,6 @@
 import React from "react";
 
-function HogTile({name, image, showMeThatBigHog}) {
-
-    
+function HogTile({name, image, showMeThatBigHog, putThatHogAway}) {
 
     return(
         <ul className="ui two wide column">
@@ -10,6 +8,7 @@ function HogTile({name, image, showMeThatBigHog}) {
                 <p>{name}</p>
                 <img className="minPigTile" src={image}/>
             </li>
+            <button onClick={() => putThatHogAway(name)}>Hide</button>
         </ul>
     )
 }

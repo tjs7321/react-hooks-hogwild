@@ -9,48 +9,53 @@ import NewHogForm from "./NewHogForm";
 function App() {
 
 	const [bigHog, setBigHog] = useState(hogs[0])
-	const [greasy, setGreasy] = useState(true)
+	const [greasy, setGreasy] = useState("All")
 	const [hogsToDisplay, setHogsToDisplay] = useState(hogs)
 	const [sortValue, setSortValue] = useState("A-Z")
 
-	function handleGreaseChange(event) {
-		if (event.target.value === "All") {setHogsToDisplay(hogs)}
-		else if (event.target.value === "Greased") {
-			setGreasy(false)
-			setHogsToDisplay(hogs.filter((hog) => hog.greased === greasy))
-		}
-		else if (event.target.value === "Not Greased") {
-			setGreasy(true)
-			setHogsToDisplay(hogs.filter((hog) => hog.greased === greasy))}
+	
+	function putThatHogAway(name) {
+		setHogsToDisplay(hogsToDisplay.filter(hog => hog.name !== name))
 	}
-
+	
 	function handleSortChange(event) {
 		setSortValue(event.target.value)
 	}
-
+	
 	function showMeThatBigHog(name) {
 		setBigHog(hogsToDisplay.find(hog => hog.name === name))
 	}
-
+	
 	function addNewHog(newHog) {
 		setHogsToDisplay([...hogsToDisplay, newHog])
 	}
 
-	console.log(hogsToDisplay)
+	let greasyOrNot
+		if (greasy === "All") {
+			greasyOrNot = hogsToDisplay
+		}
+		else if (greasy === "Greased") {
+			greasyOrNot = (hogsToDisplay.filter((hog) => hog.greased === true))
+		}
+		else if (greasy === "Not Greased") {
+			greasyOrNot = (hogsToDisplay.filter((hog) => hog.greased === false))}
+
+	console.log(greasyOrNot)
 	
 	return (
 		<div className="App">
 			<Nav />
 			<HogBigDisplay bigHog={bigHog}/>
 			<HogFilter
-			handleGreaseChange={handleGreaseChange}
 			handleSortChange={handleSortChange}
+			setGreasy={setGreasy}
 			/>
 			<NewHogForm addNewHog={addNewHog}/>
 			<HogTileDisplay
-			hogsToDisplay={hogsToDisplay}
+			greasyOrNot={greasyOrNot}
 			showMeThatBigHog={showMeThatBigHog}
 			sortValue={sortValue}
+			putThatHogAway={putThatHogAway}
 			/>
 		</div>
 	);

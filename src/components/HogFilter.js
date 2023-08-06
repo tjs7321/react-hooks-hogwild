@@ -1,6 +1,10 @@
 import React from "react";
 
-function HogFilter({handleGreaseChange, handleSortChange}) {
+function HogFilter({handleSortChange, setGreasy}) {
+
+    function handleGreaseChange(event) {
+        setGreasy(event.target.value)
+    }
 
 
     return(
